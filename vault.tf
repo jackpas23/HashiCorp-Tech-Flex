@@ -12,9 +12,7 @@ terraform {
 provider "hcp" {}
 
 // Use the cloud provider AWS to provision resources that will be connected to HCP
-provider "aws" {
-  region = var.region
-}
+
 
 // Create an HVN
 resource "hcp_hvn" "example_hvn" {
