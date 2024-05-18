@@ -27,3 +27,14 @@ variable "tier" {
   type        = string
   default     = "dev"
 }
+variable "HCP_CLIENT_ID" {
+  description = "The HCP Client ID"
+  type        = string
+  sensitive   = true
+}
+
+variable "HCP_CLIENT_SECRET" {
+  description = "The HCP Client Secret"
+  type        = string
+  sensitive   = true
+}
