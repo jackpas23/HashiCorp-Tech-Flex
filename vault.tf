@@ -1,5 +1,5 @@
-provider "aws" {
-  region = var.region
+provider "hcp" {
+  #region = var.region
   }
 
 resource "hcp_hvn" "learn_hcp_vault_hvn" {
