@@ -1,18 +1,16 @@
 
+provider "hcp" {}
 
-provider "hcp" {
-  // Configure the HCP provider if necessary
+// Create a Vault cluster within the HVN.
+resource "hcp_vault_cluster" "example" {
+  cluster_id = "vault-cluster"
+  hvn_id     = hcp_hvn.example.hvn_id
 }
 
-resource "hcp_hvn" "learn_hcp_vault_hvn" {
-  hvn_id         = var.hvn_id
-  cloud_provider = var.cloud_provider
-  region         = var.region
-}
-
-resource "hcp_vault_cluster" "learn_hcp_vault" {
-  hvn_id     = hcp_hvn.learn_hcp_vault_hvn.hvn_id
-  cluster_id = var.cluster_id
-  tier       = var.tier
-  # public_endpoint = true
+// Create a HashiCorp Virtual Network (HVN).
+resource "hcp_hvn" "example" {
+  hvn_id         = "hvn"
+  cloud_provider = "aws"
+  region         = "us-west-2"
+  cidr_block     = "172.25.16.0/20"
 }
