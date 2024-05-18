@@ -1,5 +1,8 @@
-provider "hcp" {
-  #region = var.region
+
+# HCP provider allows authentication through HCP##
+provider "hcp"{}
+provider "aws" {
+  region = var.region
   }
 
 resource "hcp_hvn" "learn_hcp_vault_hvn" {
