@@ -1,11 +1,4 @@
-terraform {
-  required_providers {
-    hcp = {
-      source  = "hashicorp/hcp"
-      version = "~> 0.27.0" # Adjust the version as necessary
-    }
-  }
-}
+
 
 provider "hcp" {
   // Configure the HCP provider if necessary
