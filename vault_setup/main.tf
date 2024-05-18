@@ -7,7 +7,7 @@ module "vault_onboarding" {
   source        = "../vault-onboarding"
   vault_address = var.vault_address
   vault_token   = var.vault_token
-  namespace     = "example-snamespace"
+  namespace     = "example-namespace"
   username      = "example-user"
   password      = "example-password"
 }
@@ -21,5 +21,5 @@ variable "vault_address" {
 variable "vault_token" {
   description = "The token to authenticate with Vault"
   type        = string
-  #default     = ""  # Optional default value
+  sensitive = true
 }

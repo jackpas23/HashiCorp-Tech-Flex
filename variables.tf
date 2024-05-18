@@ -10,11 +10,7 @@ variable "cluster_id" {
   default     = "learn-hcp-vault-cluster"
 }
 
-variable "peering_id" {
-  description = "The ID of the HCP peering connection."
-  type        = string
-  default     = "learn-peering"
-}
+
 
 variable "route_id" {
   description = "The ID of the HCP HVN route."
@@ -38,4 +34,14 @@ variable "tier" {
   description = "Tier of the Vault Dedicated cluster. Valid options for tiers."
   type        = string
   default     = "dev"
+}
+variable "vault_address" {
+  description = "The address of the Vault server"
+  type        = string
+  default = "default"
+}
+variable "vault_token" {
+  description = "The token to authenticate with Vault"
+  type        = string
+  default = "default"
 }
