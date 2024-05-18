@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.region
+  }
+
 resource "hcp_hvn" "learn_hcp_vault_hvn" {
   hvn_id         = var.hvn_id
   cloud_provider = var.cloud_provider
