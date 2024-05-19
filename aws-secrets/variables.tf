@@ -22,6 +22,7 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
   description = "The AWS Secret Key for the secrets engine"
   type        = string
+  sensitive   = true
 }
 
 variable "aws_region" {
