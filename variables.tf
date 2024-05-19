@@ -34,3 +34,12 @@ variable "tier" {
   default     = "dev"
 }
 
+variable "aws_access_key" {
+  description = "The AWS Access Key ID for the secrets engine"
+  type        = string
+}
+
+variable "aws_secret_key" {
+  description = "The AWS Secret Key for the secrets engine"
+  type        = string
+}
