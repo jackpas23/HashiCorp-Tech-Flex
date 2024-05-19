@@ -23,3 +23,15 @@ module "vault_onboarding" {
   username      = "example-user"
   password      = "example-password"
 }
+
+module "aws_secrets_engine" {
+  source  = "./aws-secrets"
+  vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
+  vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
+  aws_backend_path = "aws"
+  aws_access_key   = "AKIA....."
+  aws_secret_key   = "AWS secret key"
+  aws_region       = "us-east-1"
+  role_name        = "my-role"
+  policy_name      = "team-policy"
+}
