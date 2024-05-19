@@ -17,13 +17,25 @@ hcp auth login
 #echo "Client ID: $CLIENT_ID"
 #echo "Client Secret: $CLIENT_SECRET"
 
-# Initialize and apply Terraform
+#!/bin/bash
+
+# Step 1: Initialize and apply the root Terraform configuration
 terraform init
-echo "yes" | terraform apply;
+echo "yes" | terraform apply
+
+# Step 2: Capture the outputs
 envars=$(terraform output -json)
-terraform apply -var "vault_address=$(echo "$envars" | jq .vault_addr.value)" -var "vault_token=$(echo "$envars" | jq .vault_addr.value)"
-#echo "VAULT_ADDR: $VAULT_ADDR"
-#echo "VAULT_TOKEN: $VAULT_TOKEN
+
+# Step 3: Extract the vault address and token from the outputs
+vault_address=$(echo "$envars" | jq -r .vault_address.value)
+vault_token=$(echo "$envars" | jq -r .vault_token.value)
+
+# Step 4: Print the values (for debugging purposes)
+echo "VAULT_ADDR: $vault_address"
+echo "VAULT_TOKEN: $vault_token"
+
+# Step 5: Initialize and apply the configuration in the vault_setup directory
 terraform -chdir=vault_setup init
-echo "yes" | terraform -chdir=vault_setup apply
-####HCP service prinicpal script 
+echo "yes" | terraform -chdir=vault_setup apply -var "vault_address=$vault_address" -var "vault_token=$vault_token"
+
+# Initialize and apply Terraform

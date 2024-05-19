@@ -5,6 +5,7 @@ provider "vault" {
 
 resource "vault_namespace" "namespace" {
   path = var.namespace
+  
 }
 
 resource "vault_mount" "kv" {
@@ -12,6 +13,7 @@ resource "vault_mount" "kv" {
   type        = "kv-v2"
   description = "Key-Value storage for static secrets"
   namespace   = vault_namespace.namespace.path
+  depends_on  = [vault_namespace.namespace]
 }
 
 resource "vault_generic_endpoint" "dev_secret" {
@@ -22,8 +24,8 @@ resource "vault_generic_endpoint" "dev_secret" {
       password = var.password
     }
   })
-  depends_on = [vault_mount.kv]
   namespace  = vault_namespace.namespace.path
+  depends_on = [vault_mount.kv]
 }
 
 resource "vault_generic_endpoint" "aws_dev_secret" {
@@ -34,8 +36,8 @@ resource "vault_generic_endpoint" "aws_dev_secret" {
       password = var.password
     }
   })
-  depends_on = [vault_mount.kv]
   namespace  = vault_namespace.namespace.path
+  depends_on = [vault_mount.kv]
 }
 
 resource "vault_generic_endpoint" "azure_dev_secret" {
@@ -46,8 +48,8 @@ resource "vault_generic_endpoint" "azure_dev_secret" {
       password = var.password
     }
   })
-  depends_on = [vault_mount.kv]
   namespace  = vault_namespace.namespace.path
+  depends_on = [vault_mount.kv]
 }
 
 resource "vault_policy" "namespace_policy" {
@@ -65,14 +67,16 @@ path "secret/data/azure/dev" {
   capabilities = ["read", "create", "update", "delete", "list"]
 }
 EOT
-  namespace = vault_namespace.namespace.path
+  namespace  = vault_namespace.namespace.path
+  depends_on = [vault_mount.kv]
 }
 
 resource "vault_auth_backend" "userpass" {
   type        = "userpass"
   description = "Userpass auth method"
-  path        = "userpass"  # Mounting at the path "userpass"
+  path        = "userpass"
   namespace   = vault_namespace.namespace.path
+  depends_on  = [vault_namespace.namespace]
 }
 
 resource "vault_generic_endpoint" "userpass_user" {
@@ -82,4 +86,5 @@ resource "vault_generic_endpoint" "userpass_user" {
     policies = [vault_policy.namespace_policy.name]
   })
   namespace = vault_namespace.namespace.path
+  depends_on = [vault_auth_backend.userpass, vault_policy.namespace_policy]
 }

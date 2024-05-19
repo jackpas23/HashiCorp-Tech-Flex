@@ -6,19 +6,20 @@ variable "vault_address" {
 variable "vault_token" {
   description = "The token to authenticate with Vault"
   type        = string
+  sensitive   = true
 }
 
 variable "namespace" {
-  description = "The name of the namespace to create"
+  description = "The namespace for the Vault configuration"
   type        = string
 }
 
 variable "username" {
-  description = "The username for the static credentials"
+  description = "The username for onboarding"
   type        = string
 }
 
 variable "password" {
-  description = "The password for the static credentials"
+  description = "The password for onboarding"
   type        = string
 }

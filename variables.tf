@@ -1,27 +1,25 @@
 variable "hvn_id" {
   description = "The ID of the HCP HVN."
   type        = string
-  default     = "learn-hcp-vault-hvn"
+  default     = "hcp-vault-hvn3"
 }
 
 variable "cluster_id" {
   description = "The ID of the Vault Dedicated cluster."
   type        = string
-  default     = "learn-hcp-vault-cluster"
+  default     = "hcp-vault-cluster3"
 }
-
-
 
 variable "route_id" {
   description = "The ID of the HCP HVN route."
   type        = string
-  default     = "learn-hvn-route"
+  default     = "hvn-route3"
 }
 
 variable "region" {
   description = "The region of the HCP HVN and Vault cluster."
   type        = string
-  default     = "us-west-2"
+  default     = "us-east-1"
 }
 
 variable "cloud_provider" {
@@ -35,13 +33,4 @@ variable "tier" {
   type        = string
   default     = "dev"
 }
-variable "vault_address" {
-  description = "The address of the Vault server"
-  type        = string
-  default = "default"
-}
-variable "vault_token" {
-  description = "The token to authenticate with Vault"
-  type        = string
-  default = "default"
-}
+
