@@ -21,12 +21,13 @@ hcp auth login
 
 # Step 1: Initialize and apply the root Terraform configuration
 terraform init
-terraform apply -target=hcp_hvn.hcp_vault_hvn3 -auto-approve
-terraform apply -target=hcp_vault_cluster.hcp_vault_cluster3 -auto-approve
-terraform apply -target=hcp_vault_cluster_admin_token.vault_admin -auto-approve
+terraform apply
+#?terraform apply -target=hcp_hvn.hcp_vault_hvn3 -auto-approve
+#terraform apply -target=hcp_vault_cluster.hcp_vault_cluster3 -auto-approve
+#terraform apply -target=hcp_vault_cluster_admin_token.vault_admin -auto-approve
 
 # Step 3: Apply the onboarding configuration
-terraform apply -auto-approve
+#terraform apply -auto-approve
 
 #echo "yes" | terraform apply
 
