@@ -13,7 +13,7 @@ terraform {
     organization = "jackpas23-org"
 
     workspaces {
-      name = "terraformcli"
+      name = "HashiCorp-Tech-Flex"
     }
   }
 }
