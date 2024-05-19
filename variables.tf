@@ -1,19 +1,19 @@
 variable "hvn_id" {
   description = "The ID of the HCP HVN."
   type        = string
-  default     = "hcp-vault-hvn3"
+  default     = "hcp-vault-hvn4"
 }
 
 variable "cluster_id" {
   description = "The ID of the Vault Dedicated cluster."
   type        = string
-  default     = "hcp-vault-cluster3"
+  default     = "hcp-vault-cluster4"
 }
 
 variable "route_id" {
   description = "The ID of the HCP HVN route."
   type        = string
-  default     = "hvn-route3"
+  default     = "hvn-route4"
 }
 
 variable "region" {
