@@ -1,28 +1,9 @@
+## 🚀 Getting Started
 
+Clone the repository, navigate into the directory, set up the environment, and watch the magic happen!
 
-
-__| |____________________________________________________| |__
-__   ____________________________________________________   __
-  | |                                                    | |  
-  | |     _            _    _       _   _          ____  | |  
-  | |    | | __ _  ___| | _(_)_ __ | |_| |__   ___|  _ \ | |  
-  | | _  | |/ _` |/ __| |/ / | '_ \| __| '_ \ / _ \ | | || |  
-  | || |_| | (_| | (__|   <| | | | | |_| | | |  __/ |_| || |  
-  | | \___/ \__,_|\___|_|\_\_|_| |_|\__|_| |_|\___|____/ | |  
-__| |____________________________________________________| |__
-__   ____________________________________________________   __
-  | |                                                    | |  
-
-
-
-WELCOME TO TERRAFORM PROJECT
-
-GIT CLONE REPO
-
-CD INTO REPO
-
-CHMOD +X SETUP.SH
-
-./SETUP.SH
-
-WATCH
+```bash
+git clone <repository-url>
+cd <repository-directory>
+chmod +x setup.sh
+./setup.sh
