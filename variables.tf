@@ -63,4 +63,5 @@ variable "admin_password" {
 variable "namespace" {
   description = "The namespace in which to provision the resources"
   type        = string
+  default = "dev"
 }
