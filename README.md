@@ -42,7 +42,7 @@ sudo apt-get install terraform && sudo apt-get install hcp
 ```sh
 #setup script assumes you have terraform installed
 git clone https://github.com/jackpas23/HashiCorp-Tech-Flex.git
-cd your-repo
+cd HashiCorp-Tech-Flex
 ./setup.sh
 ```
 
