@@ -36,8 +36,13 @@ variable "role_name" {
   type        = string
 }
 
-variable "policy_name" {
-  description = "Name of the policy to be created for the team"
+variable "user_policy_name" {
+  description = "Name of the policy to be created for users"
+  type        = string
+}
+
+variable "app_policy_name" {
+  description = "Name of the policy to be created for applications"
   type        = string
 }
 #namespace defaults to admin, default attribute not neccesary

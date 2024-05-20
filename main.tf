@@ -33,7 +33,8 @@ module "aws_secrets_engine" {
   aws_access_key   = var.aws_access_key
   aws_secret_key   = var.aws_secret_key
   aws_region       = "us-east-1"
-  role_name        = "my-role"
-  policy_name      = "team-policy"
+  role_name        = "jackinthed"
+  user_policy_name = "dev-aws-user"
+  app_policy_name  = "dev-aws-app"
   namespace = var.namespace
 }

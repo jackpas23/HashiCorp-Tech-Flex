@@ -1,4 +1,4 @@
-resource "vault_policy" "namespace_policy" {
+resource "vault_policy" "user_policy" {
   name = "namespace-policy"
   policy = <<EOT
 path "secret/data/dev" {
