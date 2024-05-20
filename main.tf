@@ -35,4 +35,5 @@ module "aws_secrets_engine" {
   aws_region       = "us-east-1"
   role_name        = "my-role"
   policy_name      = "team-policy"
+  namespace = var.namespace
 }
