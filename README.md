@@ -62,7 +62,7 @@ The root module sets up the overall infrastructure using HCP and orchestrates th
 
 ### Vault Onboarding Module
 
-This module sets up a namespace, a static K/V mount, and generates static credentials for access to the namespace. It also creates policies for the namespace.
+This module sets up a namespace, a static K/V mount, and generates static credentials for access to the namespace. It also creates a user and admin policy for the namespace.
 
 #### Example Usage
 
@@ -80,7 +80,7 @@ module "vault_onboarding" {
 
 ### AWS Secrets Engine Module
 
-This module sets up the AWS Secrets Engine in Vault, allowing the team to generate dynamic credentials for AWS. It creates necessary roles and policies for different types of access.
+This module sets up the AWS Secrets Engine in Vault, allowing the team to generate dynamic credentials for AWS. It creates necessary roles and policies for user and application access.
 
 #### Example Usage
 
