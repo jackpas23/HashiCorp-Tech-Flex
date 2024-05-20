@@ -1,3 +1,5 @@
+#for local linux run
+
 variable "hvn_id" {
   description = "The ID of the HCP HVN."
   type        = string
@@ -84,14 +86,4 @@ variable "aws_backend_path" {
   description = "Path where the AWS backend will be mounted"
   type        = string
   default     = "aws"
-}
-variable "HCP_CLIENT_ID" {
-  description = "client ID for HCP"
-  type        = string
-  
-}
-variable "HCP_CLIENT_SECRET" {
-  description = "client secret for HCP"
-  type        = string
-  sensitive = true
 }
