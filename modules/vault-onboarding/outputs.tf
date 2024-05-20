@@ -8,4 +8,10 @@ output "username" {
 
 output "password" {
   value = var.password
+  sensitive = true
+}
+
+output "admin_password" {
+  value = var.admin_password
+  sensitive = true
 }

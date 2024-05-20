@@ -16,17 +16,17 @@ resource "hcp_vault_cluster_admin_token" "vault_admin" {
 }
 
 module "vault_onboarding" {
-  source        = "./vault-onboarding"
+  source        = "./modules/vault-onboarding"
   vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
   vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
-  namespace     = "example-namespace"
+  namespace     = "dev-namespace"
   username      = var.username
   password      = var.password
   admin_password = var.admin_password
 }
 
 module "aws_secrets_engine" {
-  source  = "./aws-secrets"
+  source  = "./modules/aws-secrets"
   vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
   vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
   aws_backend_path = "aws"
@@ -35,4 +35,5 @@ module "aws_secrets_engine" {
   aws_region       = "us-east-1"
   role_name        = "my-role"
   policy_name      = "team-policy"
+  
 }

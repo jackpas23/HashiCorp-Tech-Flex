@@ -40,3 +40,8 @@ variable "policy_name" {
   description = "Name of the policy to be created for the team"
   type        = string
 }
+variable "namespace" {
+  description = "The namespace in which to provision the resources"
+  type        = string
+  default = "admin"
+}
