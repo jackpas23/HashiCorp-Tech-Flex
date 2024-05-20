@@ -38,7 +38,7 @@ path "auth/*" {
   capabilities = ["list", "read"]
 }
 
-# Add more paths as needed for admin visibility
+
 EOT
   namespace  = vault_namespace.namespace.path
 }
