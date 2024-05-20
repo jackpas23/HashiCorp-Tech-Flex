@@ -5,7 +5,6 @@ This repository contains a Terraform configuration to set up an AWS Secrets Engi
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) installed.
-- Access to a Vault instance with admin privileges.
 - AWS account with access keys.
 - HashiCorp Cloud Platform (HCP) credentials.
 
@@ -16,3 +15,4 @@ This repository contains a Terraform configuration to set up an AWS Secrets Engi
    ```sh
    git clone https://github.com/your-repo.git
    cd your-repo
+   ./setup.sh
