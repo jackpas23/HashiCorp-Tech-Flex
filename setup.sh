@@ -12,6 +12,7 @@ read -p "Enter the user policy name (user_policy_name) [default dev-aws-user]:: 
 read -p "Enter the application policy name (app_policy_name) [ default dev-aws-app]: " app_policy_name
 read -p "Enter the username (username) for inital namespace user: " username
 read -sp "Enter the password (password)for inital namespace password: " password
+echo
 read -sp "Enter the password (password)for inital namespace admin: " admin_password
 echo
 echo
