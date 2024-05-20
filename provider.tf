@@ -8,12 +8,4 @@ provider "vault" {
   token   = hcp_vault_cluster_admin_token.vault_admin.token
 
 }
-terraform {
-  backend "remote" {
-    organization = "jackpas23-org"
 
-    workspaces {
-      name = "HashiCorp-Tech-Flex"
-    }
-  }
-}
