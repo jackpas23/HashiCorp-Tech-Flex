@@ -1,4 +1,4 @@
-#live running version 2.0.1
+#live running version 2.0.2
 resource "hcp_hvn" "hcp_vault_hvn" {
   hvn_id         = var.hvn_id
   cloud_provider = var.cloud_provider
