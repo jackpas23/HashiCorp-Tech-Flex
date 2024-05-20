@@ -29,15 +29,18 @@ The project is divided into two main directories:
 To run this project, you need the following dependencies:
 
 - [Terraform](https://www.terraform.io/downloads.html) (v1.0.0 or later)
-- Access to a Vault instance with admin privileges
 - AWS account with access keys (account needs to allow IAM provisioning eg. Admin)
 - HashiCorp Cloud Platform (HCP) credentials
 
 ## Setup and Usage
-
+Make sure you have terraform installed on your linux distro.
+```
+sudo apt-get install terraform
+```
 ### Step 1: Clone the Repository
 
 ```sh
+#setup script assumes you have terraform installed
 git clone https://github.com/your-repo.git
 cd your-repo
 ./setup.sh
