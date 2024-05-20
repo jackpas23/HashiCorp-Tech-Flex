@@ -1,5 +1,5 @@
-resource "vault_policy" "user_policy" {
-  name = "namespace-policy"
+resource "vault_policy" "namespace_policy" {
+  name = "dev-user"
   policy = <<EOT
 path "secret/data/dev" {
   capabilities = ["read", "create", "update", "delete", "list"]
@@ -18,7 +18,7 @@ EOT
 }
 
 resource "vault_policy" "admin_policy" {
-  name = "admin-policy"
+  name = "dev-admin"
   policy = <<EOT
 # List and read metadata for all paths
 path "secret/metadata/*" {
