@@ -1,4 +1,4 @@
-# Terraform Vault Setup
+# Linux Terraform Vault Project 
 
 Welcome to the Terraform configuration for setting up a Vault cluster using two custom modules. This guide will help you understand how the project is structured and how to get everything running.
 
