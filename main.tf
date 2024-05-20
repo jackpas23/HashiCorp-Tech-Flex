@@ -19,7 +19,7 @@ module "vault_onboarding" {
   source        = "./modules/vault-onboarding"
   vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
   vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
-  namespace     = "dev-namespace"
+  namespace     = var.namespace
   username      = var.username
   password      = var.password
   admin_password = var.admin_password
@@ -35,5 +35,4 @@ module "aws_secrets_engine" {
   aws_region       = "us-east-1"
   role_name        = "my-role"
   policy_name      = "team-policy"
-  
 }
