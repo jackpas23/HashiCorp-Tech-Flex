@@ -18,8 +18,6 @@ echo
 echo
 
 # Export the environment variables
-export TF_VAR_vault_address="$vault_address"
-export TF_VAR_vault_admin_token="$vault_admin_token"
 export TF_VAR_namespace="$namespace"
 export TF_VAR_aws_access_key="$aws_access_key"
 export TF_VAR_aws_secret_key="$aws_secret_key"
