@@ -1,12 +1,13 @@
-# Terraform Vault AWS Secrets Engine Setup
+# Terraform Vault Setup
 
-Welcome to the Terraform configuration for setting up an AWS Secrets Engine in Vault using HashiCorp Cloud Platform (HCP). This project is designed for an interview to showcase your skills as a DevSecOps Engineer for HashiCorp Vault.
+Welcome to the Terraform configuration for setting up a Vault cluster using two custom modules. This guide will help you understand how the project is structured and how to get everything running.
 
 ## Project Structure
 
-The project is organized into two main directories:
-- **Root Directory**: Contains the primary Terraform configuration files.
-- **Modules Directory**: Contains reusable Terraform modules for onboarding and AWS secrets engine setup.
+The project is divided into two main directories:
+
+- **Root Directory**: This directory holds the primary Terraform configuration files that set up the overall infrastructure.
+- **Modules Directory**: This directory contains reusable Terraform modules, specifically for onboarding and setting up the AWS secrets engine.
 
 ## Table of Contents
 
@@ -16,16 +17,20 @@ The project is organized into two main directories:
 4. [Modules](#modules)
     - [Vault Onboarding Module](#vault-onboarding-module)
     - [AWS Secrets Engine Module](#aws-secrets-engine-module)
-5. [Variable Definitions](#variable-definitions)
-6. [Outputs](#outputs)
-
+5. [Policies](#policies)
+    - [Namespace Policy](#namespace-policy)
+    - [Admin Policy](#admin-policy)
+    - [Application Policy](#application-policy)
+    - [User Policy](#user-policy)
+6. [Variable Definitions](#variable-definitions)
+7. [Outputs](#outputs)
 ## Dependencies
 
 To run this project, you need the following dependencies:
 
 - [Terraform](https://www.terraform.io/downloads.html) (v1.0.0 or later)
 - Access to a Vault instance with admin privileges
-- AWS account with access keys
+- AWS account with access keys (account needs to allow IAM provisioning eg. Admin)
 - HashiCorp Cloud Platform (HCP) credentials
 
 ## Setup and Usage
@@ -40,48 +45,144 @@ cd your-repo
 
 ### Step 2: Initialize and Apply Terraform Configuration
 
-The setup.sh script will prompt you for the necessary inputs, export the required environment variables, initialize Terraform, and apply the configuration.
+The `setup.sh` script will prompt you for the necessary inputs, export the required environment variables, initialize Terraform, and apply the configuration. 
 
+### Step 3: Accessing The Vault
 
+after the setup.sh script has finished executing, the terminal output will provide you with the new cluster address and admin token.
 
 ## Modules
 
+### Root Module
+
+The root module sets up the overall infrastructure using HCP and orchestrates the onboarding and AWS Secrets Engine modules.
+
 ### Vault Onboarding Module
 
-This module sets up a namespace, static K/V mount, and generates static credentials for access to the namespace.
+This module sets up a namespace, a static K/V mount, and generates static credentials for access to the namespace. It also creates policies for the namespace.
 
 #### Example Usage
 
 ```hcl
 module "vault_onboarding" {
-  source = "./modules/vault-onboarding"
-  vault_address = var.vault_address
-  vault_token = var.vault_admin_token
-  namespace = var.namespace
-  username = var.username
-  password = var.password
-  admin_password = var.admin_password
+  source        = "./modules/vault-onboarding"
+  vault_address = hcp_vault_cluster.hcp_vault_cluster.vault_public_endpoint_url
+  vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
+  namespace     = var.namespace
+  username      = var.username
+  password      = var.password
+  admin_password = var.admin_password  
 }
 ```
 
 ### AWS Secrets Engine Module
 
-This module sets up the AWS Secrets Engine in Vault, allowing the team to generate dynamic credentials for AWS.
+This module sets up the AWS Secrets Engine in Vault, allowing the team to generate dynamic credentials for AWS. It creates necessary roles and policies for different types of access.
 
 #### Example Usage
 
 ```hcl
 module "aws_secrets_engine" {
-  source = "./modules/aws-secrets"
-  vault_address = var.vault_address
-  vault_token = var.vault_admin_token
+  source  = "./modules/aws-secrets"
+  vault_address = hcp_vault_cluster.hcp_vault_cluster.vault_public_endpoint_url
+  vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
   aws_backend_path = var.aws_backend_path
-  aws_access_key = var.aws_access_key
-  aws_secret_key = var.aws_secret_key
-  aws_region = var.aws_region
-  role_name = var.role_name
-  app_policy_name = var.app_policy_name
-  namespace = module.vault_onboarding.namespace
+  aws_access_key   = var.aws_access_key
+  aws_secret_key   = var.aws_secret_key
+  aws_region       = var.aws_region
+  role_name        = var.role_name
+  user_policy_name = var.user_policy_name
+  app_policy_name  = var.app_policy_name
+  namespace =  module.vault_onboarding.namespace
+}
+```
+
+## Policies
+
+### Namespace Policy 
+The namespace policy allows read/write access to secrets at /secret/data/dev, /secret/data/aws/dev, and /secret/data/azure/dev but does not allow access to other areas of the namespace.
+
+```hcl
+resource "vault_policy" "namespace_policy" {
+  name = "dev-user"
+  policy = <<EOT
+path "secret/data/dev" {
+  capabilities = ["read", "create", "update", "delete", "list"]
+}
+
+path "secret/data/aws/dev" {
+  capabilities = ["read", "create", "update", "delete", "list"]
+}
+
+path "secret/data/azure/dev" {
+  capabilities = ["read", "create", "update", "delete", "list"]
+}
+EOT
+  namespace  = vault_namespace.namespace.path
+  depends_on = [vault_mount.kv]
+}
+```
+### Admin Policy
+
+The admin policy allows full access to the namespace and the system backend, but it does not allow access to secret values.
+
+```hcl
+resource "vault_policy" "admin_policy" {
+  name = "dev-admin"
+  policy = <<EOT
+# List and read metadata for all paths
+path "secret/metadata/*" {
+  capabilities = ["list", "read"]
+}
+
+path "secret/data/*" {
+  capabilities = ["list"]
+}
+
+# Grant similar capabilities for system and auth paths
+path "sys/*" {
+  capabilities = ["list", "read"]
+}
+
+path "auth/*" {
+  capabilities = ["list", "read"]
+}
+EOT
+  namespace  = vault_namespace.namespace.path
+}
+```
+
+### Application Policy 
+
+The application policy allows read access to both keys and values within the specified paths.
+
+```hcl
+resource "vault_policy" "aws_application_policy" {
+  name      = var.app_policy_name
+  namespace = var.namespace
+
+  policy = <<EOT
+path "${var.aws_backend_path}/creds/${var.role_name}" {
+  capabilities = ["read", "list"]
+}
+EOT
+}
+```
+
+### User Policy 
+
+The user policy allows users to create, update, delete, and list keys, but they cannot read the values.
+
+```hcl
+resource "vault_policy" "aws_user_policy" {
+  name      = var.user_policy_name
+  namespace = var.namespace
+
+  policy = <<EOT
+path "${var.aws_backend_path}/creds/${var.role_name}" {
+  capabilities = ["create", "update", "delete", "list"]
+}
+EOT
 }
 ```
 
@@ -105,11 +206,14 @@ module "aws_secrets_engine" {
 
 ## Outputs
 
+### Root Module
+- `vault_address`: The address of the Vault cluster.
+- `vault_token`: The inital admin access token used to access root namespace.
 ### Vault Onboarding Module
 
 - `namespace`: The namespace created for the Vault onboarding.
+- `username`: The username for Vault onboarding.
+- `password`: The password for Vault onboarding (sensitive).
+- `admin_password`: The admin password for Vault onboarding (sensitive).
+- `onboarding_complete`: Indicator that the onboarding process is complete.
 
-### AWS Secrets Engine Module
-
-- `aws_user_policies`: List of user policies created for AWS.
-- `aws_application_policy`: Policy created for applications in AWS.
