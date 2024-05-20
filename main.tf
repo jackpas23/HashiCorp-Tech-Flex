@@ -4,7 +4,7 @@ resource "hcp_hvn" "hcp_vault_hvn1" {
   cloud_provider = var.cloud_provider
   region         = var.aws_region
 }
-resource "hcp_vault_cluster" "hcp_vault_cluster1" {
+resource "hcp_vault_cluster" "hcp_vault_cluster" {
   hvn_id          = hcp_hvn.hcp_vault_hvn1.hvn_id
   cluster_id      = var.cluster_id
   tier            = var.tier
