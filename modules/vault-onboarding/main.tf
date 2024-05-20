@@ -5,5 +5,4 @@ provider "vault" {
 
 resource "vault_namespace" "namespace" {
   path = var.namespace
-  
 }
