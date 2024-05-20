@@ -1,20 +1,30 @@
 #!/bin/bash
 
-# Prompt the user for input
+# Prompt the user for input with default values
 read -p "Enter the namespace (namespace) [default: dev]: " namespace
+namespace=${namespace:-dev}
+
 read -p "Enter the AWS Access Key ID (aws_access_key): " aws_access_key
 read -sp "Enter the AWS Secret Key (aws_secret_key): " aws_secret_key
 echo
+
 read -p "Enter the AWS region (aws_region) [default: us-east-1]: " aws_region
 aws_region=${aws_region:-us-east-1}
-read -p "Enter the role name (role_name) [default dev]: " role_name
-read -p "Enter the user policy name (user_policy_name) [default dev-aws-user]: " user_policy_name
-read -p "Enter the application policy name (app_policy_name) [ default dev-aws-app]: " app_policy_name
-read -p "Enter the username (username) for inital namespace user: " username
-read -sp "Enter the password (password) for inital namespace password: " password
+
+read -p "Enter the role name (role_name) [default: dev]: " role_name
+role_name=${role_name:-dev}
+
+read -p "Enter the user policy name (user_policy_name) [default: dev-aws-user]: " user_policy_name
+user_policy_name=${user_policy_name:-dev-aws-user}
+
+read -p "Enter the application policy name (app_policy_name) [default: dev-aws-app]: " app_policy_name
+app_policy_name=${app_policy_name:-dev-aws-app}
+
+read -p "Enter the username (username) for initial namespace user: " username
+read -sp "Enter the password (password) for initial namespace password: " password
 echo
-read -sp "Enter the password (password) for inital namespace admin: " admin_password
-echo
+
+read -sp "Enter the password (password) for initial namespace admin: " admin_password
 echo
 
 # Export the environment variables
@@ -41,10 +51,13 @@ echo "TF_VAR_user_policy_name=$TF_VAR_user_policy_name"
 echo "TF_VAR_app_policy_name=$TF_VAR_app_policy_name"
 echo "TF_VAR_username=$TF_VAR_username"
 echo "TF_VAR_password=********"  # Do not print passwords
-echo "TF_VAR_admin_password=********" # Do not print passwords
+echo "TF_VAR_admin_password=********"  # Do not print passwords
+
+# Authenticate, initialize and apply Terraform configuration
 hcp auth login
 
- terraform init
- terraform plan
- echo "yes" | terraform apply
+terraform init
+terraform plan
+echo "yes" | terraform apply
 terraform output -json
+
