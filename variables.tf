@@ -85,3 +85,13 @@ variable "aws_backend_path" {
   type        = string
   default     = "aws"
 }
+variable "HCP_CLIENT_ID" {
+  description = "client ID for HCP"
+  type        = string
+  
+}
+variable "HCP_CLIENT_SECRET" {
+  description = "client secret for HCP"
+  type        = string
+  sensitive = true
+}
