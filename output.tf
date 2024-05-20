@@ -1,6 +1,6 @@
 output "vault_address" {
   description = "The address of the Vault server"
-  value       = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
+  value       = hcp_vault_cluster.hcp_vault_cluster.vault_public_endpoint_url
 
 }
 
