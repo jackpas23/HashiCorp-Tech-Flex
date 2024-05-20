@@ -42,7 +42,7 @@ echo "TF_VAR_app_policy_name=$TF_VAR_app_policy_name"
 echo "TF_VAR_username=$TF_VAR_username"
 echo "TF_VAR_password=********"  # Do not print passwords
 echo "TF_VAR_admin_password=********" # Do not print passwords
-
+hcp auth login
 
  terraform init
  terraform plan
