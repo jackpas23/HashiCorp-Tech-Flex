@@ -12,6 +12,7 @@ read -p "Enter the user policy name (user_policy_name) [default dev-aws-user]:: 
 read -p "Enter the application policy name (app_policy_name) [ default dev-aws-app]: " app_policy_name
 read -p "Enter the username (username) for inital namespace user: " username
 read -sp "Enter the password (password)for inital namespace password: " password
+read -sp "Enter the password (password)for inital namespace admin: " admin_password
 echo
 echo
 
@@ -41,9 +42,10 @@ echo "TF_VAR_user_policy_name=$TF_VAR_user_policy_name"
 echo "TF_VAR_app_policy_name=$TF_VAR_app_policy_name"
 echo "TF_VAR_username=$TF_VAR_username"
 echo "TF_VAR_password=********"  # Do not print passwords
+echo "TF_VAR_admin_password=********" # Do not print passwords
 
 # Optionally, you can run Terraform commands here if desired
  terraform init
  terraform plan
- terraform apply
-
+ echo "yes" | terraform apply
+terraform output -json
