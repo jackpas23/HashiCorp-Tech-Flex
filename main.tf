@@ -22,6 +22,7 @@ module "vault_onboarding" {
   namespace     = "example-namespace"
   username      = var.username
   password      = var.password
+  admin_password = var.admin_password
 }
 
 module "aws_secrets_engine" {
