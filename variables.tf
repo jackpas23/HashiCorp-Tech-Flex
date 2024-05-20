@@ -44,3 +44,14 @@ variable "aws_secret_key" {
   type        = string
   sensitive   = true
 }
+
+variable "username" {
+  description = "The username for onboarding"
+  type        = string
+}
+
+variable "password" {
+  description = "The password for onboarding"
+  type        = string
+  sensitive = true
+}

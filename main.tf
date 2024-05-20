@@ -20,8 +20,8 @@ module "vault_onboarding" {
   vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
   vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
   namespace     = "example-namespace"
-  username      = "example-user"
-  password      = "example-password"
+  username      = var.username
+  password      = var.password
 }
 
 module "aws_secrets_engine" {

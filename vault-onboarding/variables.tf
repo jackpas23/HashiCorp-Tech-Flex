@@ -22,4 +22,5 @@ variable "username" {
 variable "password" {
   description = "The password for onboarding"
   type        = string
+  sensitive = true
 }
