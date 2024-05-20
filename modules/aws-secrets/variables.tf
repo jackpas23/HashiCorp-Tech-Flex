@@ -44,5 +44,4 @@ variable "policy_name" {
 variable "namespace" {
   description = "The namespace in which to provision the resources"
   type        = string
- 
 }
