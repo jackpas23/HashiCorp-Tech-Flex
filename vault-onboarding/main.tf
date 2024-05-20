@@ -70,6 +70,31 @@ EOT
   namespace  = vault_namespace.namespace.path
   depends_on = [vault_mount.kv]
 }
+resource "vault_policy" "admin_policy" {
+  name = "admin-policy"
+  policy = <<EOT
+# List and read metadata for all paths
+path "secret/metadata/*" {
+  capabilities = ["list", "read"]
+}
+
+path "secret/data/*" {
+  capabilities = ["list"]
+}
+
+# Grant similar capabilities for system and auth paths
+path "sys/*" {
+  capabilities = ["list", "read"]
+}
+
+path "auth/*" {
+  capabilities = ["list", "read"]
+}
+
+# Add more paths as needed for admin visibility
+EOT
+  namespace  = vault_namespace.namespace.path
+}
 
 resource "vault_auth_backend" "userpass" {
   type        = "userpass"
@@ -87,4 +112,13 @@ resource "vault_generic_endpoint" "userpass_user" {
   })
   namespace = vault_namespace.namespace.path
   depends_on = [vault_auth_backend.userpass, vault_policy.namespace_policy]
+}
+resource "vault_generic_endpoint" "admin_user" {
+  path = "auth/userpass/users/admin"
+  data_json = jsonencode({
+    password = var.admin_password
+    policies = ["admin-policy"]
+  })
+  namespace = vault_namespace.namespace.path
+  depends_on = [vault_auth_backend.userpass, vault_policy.admin_policy]
 }
