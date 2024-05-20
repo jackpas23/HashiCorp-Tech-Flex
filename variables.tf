@@ -60,8 +60,3 @@ variable "admin_password" {
   type        = string
   sensitive   = true
 }
-variable "namespace" {
-  description = "The namespace in which to provision the resources"
-  type        = string
-  default = "dev"
-}

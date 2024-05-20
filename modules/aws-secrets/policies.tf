@@ -6,5 +6,5 @@ path "${var.aws_backend_path}/creds/${var.role_name}" {
   capabilities = ["read"]
 }
 EOT
-    namespace = var.namespace
+    #namespace = var.namespace
 }
