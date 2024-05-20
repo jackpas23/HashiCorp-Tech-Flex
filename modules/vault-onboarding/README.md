@@ -1,4 +1,4 @@
-# Vault Onboarding Module README
+# Vault Onboarding Module
 ## Overview
 
 This module sets up a namespace in Vault, creates a static K/V mount, and generates static credentials for accessing the namespace. It also defines policies for different levels of access within the namespace.
