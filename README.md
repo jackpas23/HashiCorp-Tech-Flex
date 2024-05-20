@@ -33,9 +33,9 @@ To run this project, you need the following dependencies:
 - HashiCorp Cloud Platform (HCP) credentials
 
 ## Setup and Usage
-Make sure you have terraform installed on your linux distro.
+Make sure you have terraform & HCP installed on your linux distro.
 ```
-sudo apt-get install terraform
+sudo apt-get install terraform && sudo apt-get install hcp
 ```
 ### Step 1: Clone the Repository
 
