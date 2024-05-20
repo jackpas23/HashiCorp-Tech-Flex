@@ -1,7 +1,7 @@
 provider "hcp" {}
 
 provider "aws" {
-  region = var.region
+  region = var.aws_region
 }
 provider "vault" {
   address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url

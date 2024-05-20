@@ -2,7 +2,7 @@
 resource "hcp_hvn" "hcp_vault_hvn1" {
   hvn_id         = var.hvn_id
   cloud_provider = var.cloud_provider
-  region         = var.region
+  region         = var.aws_region
 }
 resource "hcp_vault_cluster" "hcp_vault_cluster1" {
   hvn_id          = hcp_hvn.hcp_vault_hvn1.hvn_id
@@ -29,12 +29,12 @@ module "aws_secrets_engine" {
   source  = "./modules/aws-secrets"
   vault_address = hcp_vault_cluster.hcp_vault_cluster1.vault_public_endpoint_url
   vault_token   = hcp_vault_cluster_admin_token.vault_admin.token
-  aws_backend_path = "aws"
+  aws_backend_path = var.aws_backend_path
   aws_access_key   = var.aws_access_key
   aws_secret_key   = var.aws_secret_key
-  aws_region       = "us-east-1"
-  role_name        = "jackinthed"
-  user_policy_name = "dev-aws-user"
-  app_policy_name  = "dev-aws-app"
+  aws_region       = var.aws_region
+  role_name        = var.role_name
+  user_policy_name = var.user_policy_name
+  app_policy_name  = var.app_policy_name
   namespace = var.namespace
 }

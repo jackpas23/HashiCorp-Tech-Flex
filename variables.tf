@@ -16,7 +16,7 @@ variable "route_id" {
   default     = "hvn-route1"
 }
 
-variable "region" {
+variable "aws_region" {
   description = "The region of the HCP HVN and Vault cluster."
   type        = string
   default     = "us-east-1"
@@ -64,4 +64,24 @@ variable "namespace" {
   description = "The namespace in which to provision the resources"
   type        = string
   default = "dev"
+}
+variable "user_policy_name" {
+  description = "ploicy name for uers in aws_secrets module"
+  type        = string
+  default     = "dev-aws-user"
+}
+variable "app_policy_name" {
+  description = "ploicy name for applications in aws_secrets module"
+  type        = string
+  default     = "dev-aws-app"
+}
+variable "role_name" {
+  description = "name of AWS user role"
+  type        = string
+  default     = "dev"
+}
+variable "aws_backend_path" {
+  description = "Path where the AWS backend will be mounted"
+  type        = string
+  default     = "aws"
 }
