@@ -13,7 +13,7 @@ terraform {
     organization = "jackpas23-org"
 
     workspaces {
-      name = "your-workspace"
+      name = "flex"
     }
   }
 }
